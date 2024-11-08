@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:mediassist/nav_bar/bottom_navbar.dart';
+import 'package:mediassist/profile/mainProfileScreen.dart';
 import 'package:mediassist/screens/home/categories/categories.dart';
 import 'package:mediassist/screens/medications/medications_screen.dart';
-import 'package:mediassist/screens/profile/profile_screen.dart';
+
 import 'package:mediassist/screens/reports/reports_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomePage(),
     const MedicationsScreen(),
     const ReportsScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   void _onPageChanged(int index) {

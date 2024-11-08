@@ -38,7 +38,10 @@ dependencies:
   animate_do: ^2.0.0
   google_nav_bar: ^5.0.6
   http: ^1.2.2
-
+  gradient_icon: ^2.0.9
+  image_picker: ^1.1.2
+  shared_preferences: ^2.3.2
+  intl_phone_number_input: ^0.7.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

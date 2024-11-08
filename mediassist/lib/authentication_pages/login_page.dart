@@ -1,10 +1,14 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:mediassist/authentication_pages/forgot_password_page.dart';
 import 'package:mediassist/authentication_pages/signup_page.dart';
 import 'package:mediassist/screens/home/home_screen.dart'; // Import the Forget Password screen
+import 'package:http/http.dart' as http;
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +18,54 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Replace with your Flask backend URL
+  final String flaskUrl = 'https://e218-47-247-226-195.ngrok-free.app/login';
+
+  Future<void> _login() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter both email and password.')),
+      );
+      return;
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse(flaskUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'password': password}),
+      );
+
+      if (response.statusCode == 200) {
+        // Successful login
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      } else {
+        // Handle error
+        final errorMessage = jsonDecode(response.body)['message'];
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to login. Please try again later.')),
+      );
+    }
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,6 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             child: TextField(
+                              controller: _emailController,
                               decoration: InputDecoration(
                                 hintText: "Email or Phone number",
                                 hintStyle: Theme.of(context)
@@ -140,6 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
+                              controller: _passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 hintText: "Password",
@@ -188,15 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const HomeScreen(), // Navigate to ForgetPasswordScreen
-                          ),
-                        );
-                      },
+                      onPressed: _login,
                       child: const Text("Login"),
                     ),
                   ),

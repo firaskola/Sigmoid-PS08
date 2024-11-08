@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediassist/authentication_pages/login_page.dart';
 
 import 'package:mediassist/screens/home/home_screen.dart';
 
@@ -80,7 +81,7 @@ class MyApp extends StatelessWidget {
           border: InputBorder.none,
         ),
       ),
-      home: const HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

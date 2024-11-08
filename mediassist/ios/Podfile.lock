@@ -9,10 +9,6 @@ PODS:
   - libphonenumber_plugin (0.0.1):
     - Flutter
     - PhoneNumberKit
-  - pedometer (0.0.1):
-    - Flutter
-  - permission_handler_apple (9.1.1):
-    - Flutter
   - PhoneNumberKit (4.0.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 4.0.0)
     - PhoneNumberKit/UIKit (= 4.0.0)
@@ -29,8 +25,6 @@ DEPENDENCIES:
   - health (from `.symlinks/plugins/health/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
-  - pedometer (from `.symlinks/plugins/pedometer/ios`)
-  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
@@ -48,10 +42,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   libphonenumber_plugin:
     :path: ".symlinks/plugins/libphonenumber_plugin/ios"
-  pedometer:
-    :path: ".symlinks/plugins/pedometer/ios"
-  permission_handler_apple:
-    :path: ".symlinks/plugins/permission_handler_apple/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
@@ -61,8 +51,6 @@ SPEC CHECKSUMS:
   health: 44840ad4328aa5586e77bef289898bfed644a81c
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   libphonenumber_plugin: 48bf4078546377eedaab4aa54978cd0f6fa23072
-  pedometer: 381969883680ade42559782cc41a3bbd453d8234
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   PhoneNumberKit: fca23e22dcd17f602577f177bdd502512190e52e
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
 

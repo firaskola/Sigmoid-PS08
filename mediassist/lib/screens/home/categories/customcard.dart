@@ -94,7 +94,7 @@ class CardListView extends StatelessWidget {
     // List of data for cards
     final List<Map<String, dynamic>> cardData = [
       {
-        'imagePath': 'assets/images/cardImages/1.jpeg',
+        'imagePath': 'assets/images/cardImages/69.jpeg',
         'title': 'Add Medicines',
         'buttonText': 'Add Data',
         'onPressed': () {
@@ -105,7 +105,7 @@ class CardListView extends StatelessWidget {
         },
       },
       {
-        'imagePath': 'assets/images/cardImages/2.jpg',
+        'imagePath': 'assets/images/cardImages/71.jpeg',
         'title': 'Add Report',
         'buttonText': 'Add Data',
         'onPressed': () {
@@ -116,7 +116,7 @@ class CardListView extends StatelessWidget {
         },
       },
       {
-        'imagePath': 'assets/images/cardImages/3.jpeg',
+        'imagePath': 'assets/images/cardImages/70.jpeg',
         'title': 'Add Apointments',
         'buttonText': 'Add Data',
         'onPressed': () {

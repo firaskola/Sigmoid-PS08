@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
           border: InputBorder.none,
         ),
       ),
-      home: LoginScreen(),
+      home: HomeScreen(),
     );
   }
 }

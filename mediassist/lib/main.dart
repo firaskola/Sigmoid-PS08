@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
           border: InputBorder.none,
         ),
       ),
-      home: const AddMedicationsPage(),
+      home: const LoginScreen(),
     );
   }
 }

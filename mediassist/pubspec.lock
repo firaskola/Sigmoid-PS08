@@ -65,22 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  dio:
-    dependency: "direct main"
-    description:
-      name: dio
-      sha256: "5598aa796bbf4699afd5c67c0f5f6e2ed542afc956884b9cd58c306966efc260"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.7.0"
-  dio_web_adapter:
-    dependency: transitive
-    description:
-      name: dio_web_adapter
-      sha256: "33259a9276d6cea88774a0000cfae0d861003497755969c92faa223108620dc8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   equatable:
     dependency: transitive
     description:
@@ -145,6 +129,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+3"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "94307bef3a324a0d329d3ab77b2f0c6e5ed739185ffc029ed28c0f9b019ea7ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.69.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -192,6 +184,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+  health:
+    dependency: "direct main"
+    description:
+      name: health
+      sha256: "85815448c97dcd1a869529db0b931feea7abc949c4739d8d457fe430f9ac2b5c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
   http:
     dependency: "direct main"
     description:
@@ -272,6 +272,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.17.0"
   intl_phone_number_input:
     dependency: "direct main"
     description:
@@ -408,6 +416,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pedometer:
+    dependency: "direct main"
+    description:
+      name: pedometer
+      sha256: "11cfba2de961893d79e65b7773b9462bc53979626b49a86972d63b40217969ee"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.2"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      sha256: bc56bfe9d3f44c3c612d8d393bd9b174eb796d706759f9b495ac254e4294baa5
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.4.5"
+  permission_handler_android:
+    dependency: transitive
+    description:
+      name: permission_handler_android
+      sha256: "59c6322171c29df93a22d150ad95f3aa19ed86542eaec409ab2691b8f35f9a47"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.3.6"
+  permission_handler_apple:
+    dependency: transitive
+    description:
+      name: permission_handler_apple
+      sha256: "99e220bce3f8877c78e4ace901082fb29fa1b4ebde529ad0932d8d664b34f3f5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.4"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      sha256: "6760eb5ef34589224771010805bea6054ad28453906936f843a8cc4d3a55c4a4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.12.0"
+  permission_handler_windows:
+    dependency: transitive
+    description:
+      name: permission_handler_windows
+      sha256: cc074aace208760f1eee6aa4fae766b45d947df85bc831cde77009cdb4720098
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.3"
   platform:
     dependency: transitive
     description:
@@ -517,6 +573,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: "0fba2a6a949308f6c2779195e8439f2c60064ad1b022abe8997f47b09e09fb6b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "19.4.56"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "9be1bb9bbdb42823439a18da71484f1964c14dbe1c255ab1b931932b12fa96e8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "19.4.56"
   term_glyph:
     dependency: transitive
     description:

@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Your app needs access to your health data for heart rate monitoring.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app needs access to motion data for step counting.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>This app requires health data access for step tracking.</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

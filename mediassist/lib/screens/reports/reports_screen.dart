@@ -200,19 +200,7 @@ class FullScreenImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Full Screen Image'),
-      ),
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.pop(context); // Close the full-screen view on tap
-          },
-          child: InteractiveViewer(
-            child: Image.network(imageUrl),
-          ),
-        ),
-      ),
+      body: Text("reports"),
     );
   }
 }

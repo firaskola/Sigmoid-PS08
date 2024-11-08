@@ -44,7 +44,7 @@ class CustomCard extends StatelessWidget {
                 bottom: 24.0,
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
@@ -58,21 +58,21 @@ class CustomCard extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.35,
                   child: TextButton(
                     style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
+                      backgroundColor: WidgetStateProperty.all<Color>(
                         Theme.of(context).primaryColor,
                       ),
                       foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
+                          WidgetStateProperty.all<Color>(Colors.black),
                     ),
                     onPressed: onButtonPressed,
                     child: Text(
                       buttonText,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w900, color: Colors.white),
                     ),
                   ),

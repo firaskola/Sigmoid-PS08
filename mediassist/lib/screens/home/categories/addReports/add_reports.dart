@@ -92,21 +92,7 @@ class _AddReportsState extends State<AddReports> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Medical Reports')),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                ElevatedButton(
-                  onPressed: _pickImage,
-                  child: const Text('Upload Report'),
-                ),
-                // You can uncomment this if you're displaying a list of reports
-                // Expanded(
-                //   child: ReportList(), // Display the list of reports here
-                // ),
-              ],
-            ),
+      body: Text('AddReports'),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddAppointments extends StatefulWidget {
-  const AddAppointments({Key? key}) : super(key: key);
+  const AddAppointments({super.key});
 
   @override
   _AddAppointmentsState createState() => _AddAppointmentsState();
@@ -10,7 +10,7 @@ class AddAppointments extends StatefulWidget {
 class _AddAppointmentsState extends State<AddAppointments> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Text('add appointments'),
     );
   }

@@ -6,10 +6,10 @@ class ProfileImage extends StatelessWidget {
   final Function() onTap;
 
   const ProfileImage({
-    Key? key,
+    super.key,
     required this.image,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +19,12 @@ class ProfileImage extends StatelessWidget {
           onTap: onTap,
           child: Container(
             width: 120,
-            height: 120,
+            height: 200,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
                 color: Colors.white,
                 width: 4.0,
-              ),
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFFB090DD),
-                  Color(0xFF5151B7),
-                ],
               ),
             ),
             child: image != null
@@ -57,16 +49,8 @@ class ProfileImage extends StatelessWidget {
                             width: double.infinity,
                             height: double.infinity,
                             decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color(0xFFB090DD),
-                                  Color(0xFF5151B7),
-                                ],
-                              ),
-                            ),
+                                shape: BoxShape.circle,
+                                color: Color.fromRGBO(143, 148, 251, 1)),
                           ),
                           const Center(
                             child: Icon(
@@ -83,28 +67,20 @@ class ProfileImage extends StatelessWidget {
         ),
         Positioned(
           right: 4,
-          top: 80,
+          top: 120,
           child: Container(
             width: 28,
             height: 28,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 3.0,
-              ),
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFFB090DD),
-                  Color(0xFF5151B7),
-                ],
-              ),
-            ),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 3.0,
+                ),
+                color: const Color.fromARGB(255, 238, 238, 238)),
             child: const Icon(
               Icons.edit,
-              color: Colors.white,
+              color: Color.fromRGBO(143, 148, 251, 1),
               size: 16,
             ),
           ),

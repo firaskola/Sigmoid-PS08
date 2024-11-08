@@ -8,7 +8,7 @@ import 'package:mediassist/profile/profileImage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileBody extends StatefulWidget {
-  const ProfileBody({Key? key}) : super(key: key);
+  const ProfileBody({super.key});
 
   @override
   _ProfileBodyState createState() => _ProfileBodyState();
@@ -141,7 +141,7 @@ class _ProfileBodyState extends State<ProfileBody> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           ProfileImage(image: _image, onTap: _getImage),
-          const SizedBox(height: 10),
+          const SizedBox(height: 0),
           const Text(
             'Mohan Krishna ',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -152,7 +152,8 @@ class _ProfileBodyState extends State<ProfileBody> {
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
           const SizedBox(height: 15),
-          const Divider(color: Colors.white, thickness: 3.5),
+          const Divider(
+              color: Color.fromARGB(103, 158, 158, 158), thickness: 1),
           const SizedBox(height: 30),
           const ActionButtons(),
           const SizedBox(height: 40),
@@ -161,5 +162,16 @@ class _ProfileBodyState extends State<ProfileBody> {
         ],
       ),
     );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Theme.of(context).canvasColor,
+        body: const ProfileBody());
   }
 }

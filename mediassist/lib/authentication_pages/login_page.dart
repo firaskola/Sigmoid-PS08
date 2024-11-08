@@ -11,7 +11,6 @@ import 'package:mediassist/screens/home/home_screen.dart'; // Import the Forget 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -20,7 +19,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -33,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter both email and password.')),
+        const SnackBar(content: Text('Please enter both email and password.')),
       );
       return;
     }
@@ -67,13 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to login. Please try again later.')),
+        const SnackBar(
+            content: Text('Failed to login. Please try again later.')),
       );
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {

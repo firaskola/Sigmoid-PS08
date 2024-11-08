@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mediassist/profile/otherProfileScreens/about_us_screen.dart';
-import 'package:mediassist/profile/otherProfileScreens/legal_screen.dart';
+
 import 'package:mediassist/profile/otherProfileScreens/settings_screen.dart';
 
 class AdditionalOptions extends StatelessWidget {
   final VoidCallback onTapLogout;
 
   const AdditionalOptions({
-    Key? key,
+    super.key,
     required this.onTapLogout,
-  }) : super(key: key);
+  });
 
   void _showLogoutConfirmationDialog(BuildContext context) {
     showDialog(
@@ -100,21 +100,16 @@ class AdditionalOptions extends StatelessWidget {
       children: [
         buildAdditionalRectangle("Settings", icon: Icons.settings, onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()));
+              MaterialPageRoute(builder: (context) => const SettingsScreen()));
         }),
-        const SizedBox(height: 20),
-        buildAdditionalRectangle("Legal", icon: Icons.description, onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LegalScreen()));
-        }),
-        const SizedBox(height: 20),
+        const SizedBox(height: 25),
         buildAdditionalRectangle("About Us", icon: Icons.info, onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AboutUsScreen()));
+              MaterialPageRoute(builder: (context) => const AboutUsScreen()));
         }),
-        const SizedBox(height: 20),
+        const SizedBox(height: 25),
         buildAdditionalRectangle("Logout",
-            color: Colors.red,
+            color: Theme.of(context).colorScheme.primary,
             showArrow: false,
             fontWeight: FontWeight.bold, onTap: () {
           _showLogoutConfirmationDialog(context);
@@ -136,7 +131,7 @@ class AdditionalOptions extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
         margin: const EdgeInsets.symmetric(vertical: 0),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(

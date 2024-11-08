@@ -5,7 +5,7 @@ import 'package:mediassist/profile/otherProfileScreens/view_profile_screen.dart'
 import 'package:mediassist/profile/otherProfileScreens/wallet_screen.dart';
 
 class ActionButtons extends StatelessWidget {
-  const ActionButtons({Key? key}) : super(key: key);
+  const ActionButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +20,15 @@ class ActionButtons extends StatelessWidget {
         }),
         const SizedBox(width: 10),
         buildRectangle(Icons.verified_user, "Get Verified", () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => GetVerifiedScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const GetVerifiedScreen()));
         }),
         const SizedBox(width: 10),
         buildRectangle(Icons.account_balance_wallet, "Wallet", () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => WalletScreen()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const WalletScreen()));
         }),
       ],
     );
@@ -44,8 +46,8 @@ class ActionButtons extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.07),
-              spreadRadius: 1,
-              blurRadius: 2,
+              spreadRadius: 2,
+              blurRadius: 4,
               offset: const Offset(0, 3),
             ),
           ],
@@ -59,8 +61,8 @@ class ActionButtons extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xFFB090DD), // Start color
-                  Color(0xFF5151B7), // End color
+                  Color.fromRGBO(143, 148, 251, 1), // Start color
+                  Color.fromRGBO(143, 148, 251, 1), // End color
                 ],
               ),
               size: 25,
@@ -74,8 +76,8 @@ class ActionButtons extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFB090DD), // Start color
-                      Color(0xFF5151B7), // End color
+                      Colors.grey, // Start color
+                      Colors.grey, // End color
                     ],
                   ).createShader(bounds);
                 },

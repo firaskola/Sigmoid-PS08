@@ -6,6 +6,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:mediassist/authentication_pages/forgot_password_page.dart';
 import 'package:mediassist/authentication_pages/signup_page.dart';
+import 'package:mediassist/ngrokurl.dart';
 import 'package:mediassist/screens/home/home_screen.dart'; // Import the Forget Password screen
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   // Replace with your Flask backend URL
-  final String flaskUrl = 'https://e218-47-247-226-195.ngrok-free.app/login';
+  final String flaskUrl = '${ConfigUrl.baseUrl}/login';
 
   Future<void> _login() async {
     final email = _emailController.text;

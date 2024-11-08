@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mediassist/ngrokurl.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -31,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     final response = await http.post(
-      Uri.parse('https://e218-47-247-226-195.ngrok-free.app/register'),
+      Uri.parse('${ConfigUrl.baseUrl}/register'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'firstname': _firstNameController.text,

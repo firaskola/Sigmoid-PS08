@@ -4,7 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:mediassist/authentication_pages/forgot_password_page.dart';
 import 'package:mediassist/authentication_pages/signup_page.dart';
-import 'package:mediassist/screens/home_screen.dart'; // Import the Forget Password screen
+import 'package:mediassist/screens/home/home_screen.dart'; // Import the Forget Password screen
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mediassist/authentication_pages/login_page.dart';
+import 'package:mediassist/screens/home/categories/add_medications.dart';
 
 void main() {
   runApp(const MyApp());
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
           border: InputBorder.none,
         ),
       ),
-      home: const LoginScreen(),
+      home: const AddMedicationsPage(),
     );
   }
 }

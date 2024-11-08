@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mediassist/nav_bar/bottom_navbar.dart';
+import 'package:mediassist/screens/home/categories/categories.dart';
 import 'package:mediassist/screens/medications/medications_screen.dart';
 import 'package:mediassist/screens/profile/profile_screen.dart';
 import 'package:mediassist/screens/reports/reports_screen.dart';
@@ -51,8 +52,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("homepage"),
+    return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
+      body: const Center(
+        child: Text("Homepage"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: const CircleBorder(),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Categories(), // Navigate to SignUpScreen
+            ),
+          );
+
+          // Add your action here, e.g., navigating to a new page or opening a dialog.
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

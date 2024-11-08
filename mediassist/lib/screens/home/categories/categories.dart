@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediassist/screens/home/categories/customcard.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _CategoriesState extends State<Categories> {
         ),
       ),
       body: const Center(
-        child: Text("Content goes here"),
+        child: CardListView(),
       ),
     );
   }

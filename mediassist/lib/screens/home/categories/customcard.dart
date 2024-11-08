@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:mediassist/screens/home/categories/addReports/add_reports.dart';
+import 'package:mediassist/screens/home/categories/add_medications.dart';
+import 'package:mediassist/screens/home/categories/appointments/add_appointments.dart';
 
 class CustomCard extends StatelessWidget {
   final String imagePath;
@@ -42,7 +44,7 @@ class CustomCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Colors.white,
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),
@@ -70,9 +72,7 @@ class CustomCard extends StatelessWidget {
                     child: Text(
                       buttonText,
                       style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        color: Theme.of(context).primaryColorLight,
-                      ),
+                          fontWeight: FontWeight.w900, color: Colors.white),
                     ),
                   ),
                 ),
@@ -94,36 +94,40 @@ class CardListView extends StatelessWidget {
     final List<Map<String, dynamic>> cardData = [
       {
         'imagePath': 'assets/images/cardImages/1.jpeg',
-        'title': 'Saved Data 1',
-        'buttonText': 'View Data 1',
+        'title': 'Add Medicines',
+        'buttonText': 'Add Data',
         'onPressed': () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const AppointmentsPage()),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddMedicationsPage()),
+          );
         },
       },
       {
         'imagePath': 'assets/images/cardImages/2.jpg',
-        'title': 'Saved Data 2',
-        'buttonText': 'View Data 2',
+        'title': 'Add Report',
+        'buttonText': 'Add Data',
         'onPressed': () {
-          // Add navigation or functionality here
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddReports()),
+          );
         },
       },
       {
         'imagePath': 'assets/images/cardImages/3.jpeg',
-        'title': 'Saved Data 3',
-        'buttonText': 'View Data 3',
+        'title': 'Add Apointments',
+        'buttonText': 'Add Data',
         'onPressed': () {
-          // Add navigation or functionality here
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddAppointments()),
+          );
         },
       },
-      // Add more card data as needed
     ];
 
     return Scaffold(
-      
       body: ListView.builder(
         itemCount: cardData.length,
         itemBuilder: (context, index) {

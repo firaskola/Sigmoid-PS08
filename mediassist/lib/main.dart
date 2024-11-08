@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mediassist/authentication_pages/login_page.dart';
+
+import 'package:mediassist/screens/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

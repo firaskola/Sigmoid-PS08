@@ -49,7 +49,7 @@ class _AddMedicationsPageState extends State<AddMedicationsPage> {
           ),
         ),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Theme.of(context).primaryColorLight,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(

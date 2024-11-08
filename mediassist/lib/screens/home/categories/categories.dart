@@ -23,7 +23,10 @@ class _CategoriesState extends State<Categories> {
           child: AppBar(
             foregroundColor: Colors.white,
             backgroundColor: Theme.of(context).colorScheme.primary,
-            title: const Text("Categories"),
+            title: const Text(
+              "Categories",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             centerTitle: true,
           ),
         ),

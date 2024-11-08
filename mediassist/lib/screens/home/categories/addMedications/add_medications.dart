@@ -1,39 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:mediassist/screens/home/home_screen.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mediassist/ngrokurl.dart';
 
-class AddMedicationsPage extends StatefulWidget {
-  const AddMedicationsPage({super.key});
+class AddMedicinePage extends StatefulWidget {
+  const AddMedicinePage({super.key});
 
   @override
-  _AddMedicationsPageState createState() => _AddMedicationsPageState();
+  _AddMedicinePageState createState() => _AddMedicinePageState();
 }
 
-class _AddMedicationsPageState extends State<AddMedicationsPage> {
-  final List<TextEditingController> medicineControllers = [
-    TextEditingController(),
-  ]; // Starts with one controller for Medicine 1
+class _AddMedicinePageState extends State<AddMedicinePage> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
-  final TextEditingController doctorController = TextEditingController();
-  final TextEditingController dateController = TextEditingController();
+  final TextEditingController morningTimeController = TextEditingController();
+  final TextEditingController eveningTimeController = TextEditingController();
+  final TextEditingController nightTimeController = TextEditingController();
+  final TextEditingController instructionsController = TextEditingController();
+  bool isLoading = false;
 
-  @override
-  void dispose() {
-    // Dispose of all controllers
-    for (var controller in medicineControllers) {
-      controller.dispose();
-    }
-    nameController.dispose();
-    ageController.dispose();
-    doctorController.dispose();
-    dateController.dispose();
-    super.dispose();
-  }
+  Future<void> addMedicine() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var sessionCookie = prefs.getString('session');
 
-  void addMedicineField() {
-    if (medicineControllers.length < 5) {
+    const String url = '${ConfigUrl.baseUrl}/add_medicine';
+    final Map<String, dynamic> data = {
+      'name': nameController.text,
+      'time_morning': morningTimeController.text, // "HH:MM:SS" format expected
+      'time_evening': eveningTimeController.text,
+      'time_night': nightTimeController.text,
+      'instructions': instructionsController.text,
+    };
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'cookie': sessionCookie ?? '', // Include session cookie
+        },
+        body: jsonEncode(data),
+      );
+
       setState(() {
-        medicineControllers.add(TextEditingController());
+        isLoading = false;
       });
+
+      if (response.statusCode == 201) {
+        final responseBody = jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseBody["message"])),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      } else {
+        final responseBody = jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseBody["message"])),
+        );
+      }
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $error')),
+      );
     }
   }
 
@@ -41,164 +80,71 @@ class _AddMedicationsPageState extends State<AddMedicationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Add Patient",
-          style: TextStyle(
-            color: Colors.white, // primaryColorLight
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        title: const Text("Add Medicine"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: 'Patient Name',
-                  labelStyle: TextStyle(
-                    color: Colors.black.withOpacity(0.84),
-                    fontWeight: FontWeight.bold,
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Medicine Name',
                   ),
                 ),
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.84),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: ageController,
-                decoration: InputDecoration(
-                  labelText: 'Age',
-                  labelStyle: TextStyle(
-                    color: Colors.black.withOpacity(0.84),
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: morningTimeController,
+                  decoration: const InputDecoration(
+                    labelText: 'Morning Time (HH:MM:SS)',
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
+                  keyboardType: TextInputType.datetime,
                 ),
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.84),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: doctorController,
-                decoration: InputDecoration(
-                  labelText: 'Doctor Consulted',
-                  labelStyle: TextStyle(
-                    color: Colors.black.withOpacity(0.84),
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: eveningTimeController,
+                  decoration: const InputDecoration(
+                    labelText: 'Evening Time (HH:MM:SS)',
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+                  keyboardType: TextInputType.datetime,
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: nightTimeController,
+                  decoration: const InputDecoration(
+                    labelText: 'Night Time (HH:MM:SS)',
+                  ),
+                  keyboardType: TextInputType.datetime,
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: instructionsController,
+                  decoration: const InputDecoration(
+                    labelText: 'Instructions',
                   ),
                 ),
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.84),
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 24.0),
+                ElevatedButton(
+                  onPressed: isLoading
+                      ? null
+                      : addMedicine, // Disable button when loading
+                  child: const Text("Add Medicine"),
                 ),
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: dateController,
-                decoration: InputDecoration(
-                  labelText: 'Date',
-                  labelStyle: TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                ),
-                keyboardType: TextInputType.datetime,
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.84),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              const Text(
-                'Medicines:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8.0),
-              Column(
-                children: [
-                  for (int i = 0; i < medicineControllers.length; i++)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: TextFormField(
-                        controller: medicineControllers[i],
-                        decoration: InputDecoration(
-                          labelText: 'Medicine ${i + 1}',
-                          labelStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.84),
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  if (medicineControllers.length < 5)
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: addMedicineField,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 24.0),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  backgroundColor: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
-                onPressed: () {
-                  // Handle button press action here (e.g., print or validate)
-                  print("Patient data ready for submission");
-                },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          if (isLoading) ...[
+            const ModalBarrier(
+              color: Colors.black54,
+              dismissible: false,
+            ),
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ],
+        ],
       ),
     );
   }

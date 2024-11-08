@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mediassist/screens/home/categories/addMedications/add_medications.dart';
 import 'package:mediassist/screens/home/categories/addReports/add_reports.dart';
-import 'package:mediassist/screens/home/categories/add_medications.dart';
+// import 'package:mediassist/screens/home/categories/add_medications.dart';
 import 'package:mediassist/screens/home/categories/appointments/add_appointments.dart';
 
 class CustomCard extends StatelessWidget {
@@ -99,7 +100,7 @@ class CardListView extends StatelessWidget {
         'onPressed': () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddMedicationsPage()),
+            MaterialPageRoute(builder: (context) => AddMedicinePage()),
           );
         },
       },

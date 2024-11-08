@@ -2,16 +2,9 @@ from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_
-import cloudinary
-import cloudinary.uploader
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
-from datetime import datetime, timezone
-import base64
-import wget 
+from datetime import datetime, time, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
-
-
-
 
 app = Flask(__name__)
 
@@ -31,21 +24,17 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(150), nullable=False)
     role = db.Column(db.String(50), nullable=False, default='Elder')
 
-
-class MedicalHistory(db.Model):
+class Medicine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(500), nullable=False)
-    image_url = db.Column(db.String(500), nullable=False)
+    time_morning = db.Column(db.Time, nullable=True)  # Morning time to take the medicine
+    time_evening = db.Column(db.Time, nullable=True)  # Evening time to take the medicine
+    time_night = db.Column(db.Time, nullable=True)    # Night time to take the medicine
+    instructions = db.Column(db.String(500), nullable=True)  # Instructions for taking medicine
     timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
 
-class DoctorAppointment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    doctor_name = db.Column(db.String(150), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    hospital_name = db.Column(db.String(150), nullable=False)
-    appointment_time = db.Column(db.DateTime, nullable=False)
 
 
 
@@ -105,16 +94,64 @@ def login():
     
     return jsonify({'message': 'invalid-creds'}), 401
 
+@app.route('/add_medicine', methods=['POST'])
+@login_required
+def add_medicine():
+    name = request.json.get('name')
+    time_morning = request.json.get('time_morning')  # Should be in "HH:MM:SS" format or null if not set
+    time_evening = request.json.get('time_evening')
+    time_night = request.json.get('time_night')
+    instructions = request.json.get('instructions')
 
+    # Validation
+    if not name:
+        return jsonify({'message': 'medicine-name-required'}), 400
 
+    # Convert times to time objects if provided
+    try:
+        time_morning = datetime.strptime(time_morning, '%H:%M:%S').time() if time_morning else None
+        time_evening = datetime.strptime(time_evening, '%H:%M:%S').time() if time_evening else None
+        time_night = datetime.strptime(time_night, '%H:%M:%S').time() if time_night else None
+    except ValueError:
+        return jsonify({'message': 'invalid-time-format'}), 400
 
+    # Create new medicine entry
+    new_medicine = Medicine(
+        user_id=current_user.id,
+        name=name,
+        time_morning=time_morning,
+        time_evening=time_evening,
+        time_night=time_night,
+        instructions=instructions
+    )
+    db.session.add(new_medicine)
+    db.session.commit()
 
+    return jsonify({'message': 'medicine-added-successfully'}), 201
 
+@app.route('/get_medicines', methods=['GET'])
+@login_required
+def get_medicines():
+    # Retrieve all medicines for the currently logged-in user
+    medicines = Medicine.query.filter_by(user_id=current_user.id).all()
+
+    # Convert medicines to a list of dictionaries
+    medicines_list = [
+        {
+            'id': medicine.id,
+            'name': medicine.name,
+            'time_morning': medicine.time_morning.strftime('%H:%M:%S') if medicine.time_morning else None,
+            'time_evening': medicine.time_evening.strftime('%H:%M:%S') if medicine.time_evening else None,
+            'time_night': medicine.time_night.strftime('%H:%M:%S') if medicine.time_night else None,
+            'instructions': medicine.instructions,
+            'timestamp': medicine.timestamp.isoformat()  # Format timestamp as ISO string
+        }
+        for medicine in medicines
+    ]
+
+    return jsonify(medicines_list), 200
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(host='0.0.0.0', port=5000, debug=True)
-
-
-

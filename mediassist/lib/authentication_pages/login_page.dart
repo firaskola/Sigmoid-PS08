@@ -9,6 +9,7 @@ import 'package:mediassist/authentication_pages/signup_page.dart';
 import 'package:mediassist/ngrokurl.dart';
 import 'package:mediassist/screens/home/home_screen.dart'; // Import the Forget Password screen
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -45,6 +46,13 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (response.statusCode == 200) {
+        if (response.headers.containsKey('set-cookie')) {
+        var sessionCookie = response.headers['set-cookie'];
+        if (sessionCookie != null) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('session', sessionCookie);
+        }
+      }
         // Successful login
         Navigator.pushReplacement(
           context,

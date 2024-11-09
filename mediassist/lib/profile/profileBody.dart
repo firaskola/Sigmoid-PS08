@@ -143,12 +143,12 @@ class _ProfileBodyState extends State<ProfileBody> {
           ProfileImage(image: _image, onTap: _getImage),
           const SizedBox(height: 0),
           const Text(
-            'Mohan Krishna ',
+            'Omkar Bhute ',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
           const Text(
-            '+91 7619292145',
+            '+91 12345567890',
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
           const SizedBox(height: 15),

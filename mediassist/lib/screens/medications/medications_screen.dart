@@ -21,6 +21,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
     fetchMedicines();
   }
 
+  // Fetch medicines from the backend
   Future<void> fetchMedicines() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var sessionCookie = prefs.getString('session');
@@ -58,11 +59,49 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
     }
   }
 
+  // Delete a medicine from the backend
+  Future<void> deleteMedicine(String medicineId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var sessionCookie = prefs.getString('session');
+
+    final String url =
+        '${ConfigUrl.baseUrl}/delete_medicine/$medicineId'; // Adjust the URL for your backend
+
+    try {
+      final response = await http.delete(
+        Uri.parse(url),
+        headers: {
+          'cookie': sessionCookie ?? '',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // If the server returns a successful response
+        setState(() {
+          medicines.removeWhere((medicine) => medicine['id'] == medicineId);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Medicine deleted successfully')),
+        );
+      } else {
+        // If the server returns an error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Failed to delete medicine: ${response.body}')),
+        );
+      }
+    } catch (error) {
+      // Catch any other errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $error')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(
@@ -96,8 +135,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                                 children: [
                                   const Icon(Icons.medication,
                                       size: 28,
-                                      color: const Color.fromRGBO(
-                                          143, 148, 251, 1)),
+                                      color: Color.fromRGBO(143, 148, 251, 1)),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(
@@ -108,33 +146,55 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
                                           color: Colors.black87),
                                     ),
                                   ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: const Color.fromRGBO(
+                                            143, 148, 251, 1)),
+                                    onPressed: () {
+                                      // Confirm before deleting
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text('Delete Medicine'),
+                                          content: const Text(
+                                              'Are you sure you want to delete this medicine?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                deleteMedicine(medicine['id']);
+                                              },
+                                              child: const Text('Delete'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 10),
                               if (medicine['time_morning'] != null)
                                 Text(
                                   "Morning: ${medicine['time_morning']}",
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.black54),
+                                  style: const TextStyle(color: Colors.black54),
                                 ),
-                              if (medicine['time_evening'] != null)
+                              if (medicine['time_afternoon'] != null)
                                 Text(
-                                  "Evening: ${medicine['time_evening']}",
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.black54),
+                                  "Afternoon: ${medicine['time_afternoon']}",
+                                  style: const TextStyle(color: Colors.black54),
                                 ),
                               if (medicine['time_night'] != null)
                                 Text(
                                   "Night: ${medicine['time_night']}",
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.black54),
+                                  style: const TextStyle(color: Colors.black54),
                                 ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "Instructions: ${medicine['instructions'] ?? 'No instructions'}",
-                                style: const TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                              ),
                             ],
                           ),
                         ),

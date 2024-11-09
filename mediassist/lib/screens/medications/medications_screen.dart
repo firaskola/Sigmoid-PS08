@@ -62,6 +62,7 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(

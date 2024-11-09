@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mediassist/ngrokurl.dart';
+import 'package:mediassist/screens/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -33,6 +34,11 @@ class AddAppointments extends StatelessWidget {
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Appointment added successfully.')),
+          
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       } else if (response.statusCode == 400) {
         var responseData = json.decode(response.body);

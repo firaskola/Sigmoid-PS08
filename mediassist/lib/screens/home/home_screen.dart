@@ -99,8 +99,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,12 +135,15 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(
-              height: 210,
-              child: UpcomingAppointments(
-                date: "12 Nov",
-                time: "10:30 AM",
-                doctorName: "Dr. John Doe",
-                details: "Regular Checkup",
+              height: 260,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: UpcomingAppointments(
+                  date: "12 Nov",
+                  time: "10:30 AM",
+                  doctorName: "Dr. deepak",
+                  details: "Regular Checkup",
+                ),
               ),
             ),
 

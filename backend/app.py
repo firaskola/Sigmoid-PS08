@@ -54,6 +54,17 @@ class MedicalHistory(db.Model):
     timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
 
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    doctor_name = db.Column(db.String(150), nullable=False)
+    appointment_datetime = db.Column(db.DateTime, nullable=False)
+    hospital_name = db.Column(db.String(150), nullable=False)
+    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+
+
+
 # Login Manager
 @login_manager.user_loader
 def load_user(user_id):
@@ -165,6 +176,21 @@ def get_medicines():
 
     return jsonify(medicines_list), 200
 
+# Delete Medicine Route
+@app.route('/delete_medicine/<int:medicine_id>', methods=['DELETE'])
+@login_required
+def delete_medicine(medicine_id):
+    # Find the medicine record by its ID and ensure it belongs to the current user
+    medicine = Medicine.query.filter_by(id=medicine_id, user_id=current_user.id).first()
+
+    if medicine:
+        db.session.delete(medicine)
+        db.session.commit()
+        return jsonify({'message': 'medicine-deleted-successfully'}), 200
+
+    return jsonify({'message': 'medicine-not-found'}), 404
+
+
 # Upload Report Route
 @app.route('/upload_report', methods=['POST'])
 @login_required
@@ -228,6 +254,72 @@ def delete_report(report_id):
         return jsonify({'message': 'report-deleted-successfully'}), 200
 
     return jsonify({'message': 'report-not-found'}), 404
+
+
+@app.route('/add_appointment', methods=['POST'])
+@login_required
+def add_appointment():
+    doctor_name = request.json.get('doctor_name')
+    appointment_datetime = request.json.get('appointment_datetime')
+    hospital_name = request.json.get('hospital_name')
+
+    if not doctor_name or not appointment_datetime or not hospital_name:
+        return jsonify({'message': 'all-fields-required'}), 400
+
+    try:
+        # Convert appointment_datetime from string to datetime object
+        appointment_datetime = datetime.strptime(appointment_datetime, '%Y-%m-%d %H:%M:%S')
+    except ValueError:
+        return jsonify({'message': 'invalid-datetime-format'}), 400
+
+    new_appointment = Appointment(
+        user_id=current_user.id,
+        doctor_name=doctor_name,
+        appointment_datetime=appointment_datetime,
+        hospital_name=hospital_name
+    )
+    db.session.add(new_appointment)
+    db.session.commit()
+
+    return jsonify({'message': 'appointment-added-successfully'}), 201
+
+
+# Get Appointments Route
+@app.route('/get_appointments', methods=['GET'])
+@login_required
+def get_appointments():
+    appointments = Appointment.query.filter_by(user_id=current_user.id).all()
+
+    appointments_list = [
+        {
+            'id': appointment.id,
+            'doctor_name': appointment.doctor_name,
+            'appointment_datetime': appointment.appointment_datetime.strftime('%Y-%m-%d %H:%M:%S'),
+            'hospital_name': appointment.hospital_name,
+            'timestamp': appointment.timestamp.isoformat()
+        }
+        for appointment in appointments
+    ]
+
+    return jsonify(appointments_list), 200
+
+
+# Delete Appointment Route
+@app.route('/delete_appointment/<int:appointment_id>', methods=['DELETE'])
+@login_required
+def delete_appointment(appointment_id):
+    appointment = Appointment.query.filter_by(id=appointment_id, user_id=current_user.id).first()
+
+    if appointment:
+        db.session.delete(appointment)
+        db.session.commit()
+        return jsonify({'message': 'appointment-deleted-successfully'}), 200
+
+    return jsonify({'message': 'appointment-not-found'}), 404
+
+
+
+
 
 if __name__ == '__main__':
     with app.app_context():

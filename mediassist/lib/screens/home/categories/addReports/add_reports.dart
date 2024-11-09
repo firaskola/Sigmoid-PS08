@@ -16,20 +16,19 @@ class AddReports extends StatefulWidget {
 class _AddReportsState extends State<AddReports> {
   final ImagePicker _picker = ImagePicker();
   bool _isLoading = false;
+  File? _imageFile;
+  String _reportName = '';
 
-  // Method to upload the report
   Future<void> uploadReport(File imageFile, String reportName) async {
     setState(() {
       _isLoading = true;
     });
 
     try {
-      // Retrieve session cookie from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var sessionCookie = prefs.getString('session'); // Get the session cookie
+      var sessionCookie = prefs.getString('session');
 
       if (sessionCookie == null) {
-        // If the session cookie is not available, prompt the user to login
         setState(() {
           _isLoading = false;
         });
@@ -45,20 +44,20 @@ class _AddReportsState extends State<AddReports> {
       );
       request.headers['cookie'] = sessionCookie;
 
-      // Attach the image file
       request.files.add(
           await http.MultipartFile.fromPath('report_image', imageFile.path));
-
-      // Add report name in the form body
       request.fields['report_name'] = reportName;
 
-      // Send the request
       var response = await request.send();
       if (response.statusCode == 201) {
-        // Report uploaded successfully
-        print('Report uploaded successfully');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Report uploaded successfully')),
+        );
+        setState(() {
+          _imageFile = null; // Reset after upload
+          _reportName = '';
+        });
       } else {
-        print('Failed to upload report');
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to upload report.')),
         );
@@ -75,24 +74,151 @@ class _AddReportsState extends State<AddReports> {
     });
   }
 
-  // Method to pick an image from gallery or camera
   Future<void> _pickImage() async {
     final XFile? pickedFile =
         await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      String reportName =
-          'Sample Report'; // You can replace this with a user input field
-
-      // Upload the image to the server
-      uploadReport(File(pickedFile.path), reportName);
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
     }
+  }
+
+  Future<void> _showReportNameDialog() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Report Name'),
+          content: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  _reportName = value;
+                });
+              },
+              decoration: const InputDecoration(hintText: "Report Name"),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (_imageFile != null && _reportName.isNotEmpty) {
+                  uploadReport(_imageFile!, _reportName);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text(
+                            'Please select an image and provide a report name.')),
+                  );
+                }
+              },
+              child: const Text('Upload'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text('AddReports'),
+      appBar: AppBar(
+        title: const Text('Add Report',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _imageFile == null
+                                ? const Text('No image selected',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500))
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(
+                                      _imageFile!,
+                                      height: 200,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                            const SizedBox(height: 20),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.sizeOf(context).width -
+                                      32, // Set a fixed width for both buttons
+                                  height:
+                                      50, // Set a fixed height for both buttons
+                                  child: ElevatedButton(
+                                    onPressed: _pickImage,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                    child: const Text('Pick an Image'),
+                                  ),
+                                ),
+                                const SizedBox(
+                                    height: 20), // Space between buttons
+                                SizedBox(
+                                  width: MediaQuery.sizeOf(context).width -
+                                      32, // Same width as the first button
+                                  height: 50, // Same height as the first button
+                                  child: ElevatedButton(
+                                    onPressed: _showReportNameDialog,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                    child: const Text('Enter Report Name'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

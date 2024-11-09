@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class UpcomingAppointments extends StatelessWidget {
-  const UpcomingAppointments({Key? key}) : super(key: key);
+  final String date;
+  final String time;
+  final String doctorName;
+  final String details;
+
+  const UpcomingAppointments({
+    Key? key,
+    required this.date,
+    required this.time,
+    required this.doctorName,
+    required this.details,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,45 +20,36 @@ class UpcomingAppointments extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black.withOpacity(0.1),
-        //     spreadRadius: 2,
-        //     blurRadius: 6,
-        //     offset: const Offset(0, 4),
-        //   ),
-        // ],
       ),
       margin: const EdgeInsets.only(right: 8), // Add margin to the right
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       height: 120,
-      width: MediaQuery.sizeOf(context).width -
-          32, // Fixed width for each item in the ListView
+      width: MediaQuery.of(context).size.width - 32, // Fixed width for each item
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Left Side - Date
           Container(
-            width: 130,
+            width: 80,
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "12",
-                  style: TextStyle(
+                  date.split(" ")[0], // Extract day
+                  style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: Color.fromRGBO(143, 148, 251, 1),
                   ),
                 ),
                 Text(
-                  "Nov",
-                  style: TextStyle(
+                  date.split(" ")[1], // Extract month
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Color.fromRGBO(143, 148, 251, 1),
                   ),
@@ -72,7 +74,7 @@ class UpcomingAppointments extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      "10:30 AM",
+                      time,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -81,18 +83,18 @@ class UpcomingAppointments extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                const Row(
+                const SizedBox(height: 12),
+                Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.person,
                       color: Color.fromRGBO(143, 148, 251, 1),
                       size: 20,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
-                      "Dr. John Doe",
-                      style: TextStyle(
+                      doctorName,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -100,7 +102,7 @@ class UpcomingAppointments extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
                 Row(
                   children: [
                     const Icon(
@@ -110,7 +112,7 @@ class UpcomingAppointments extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      "Regular Checkup",
+                      details,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],

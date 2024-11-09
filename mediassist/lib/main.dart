@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // Primary color used across the app
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: const Color.fromRGBO(143, 148, 251, 1),
-          secondary: const Color.fromRGBO(143, 148, 251, .2),
+          secondary: const Color.fromRGBO(143, 148, 251, .35),
         ),
 
         // Background color for scaffold widgets
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
           border: InputBorder.none,
         ),
       ),
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -8,6 +8,11 @@
 	<string>This app needs access to motion data for step counting.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>This app requires health data access for step tracking.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take photos for reports.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select images for reports.</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

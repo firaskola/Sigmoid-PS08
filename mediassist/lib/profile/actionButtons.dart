@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
-import 'package:mediassist/profile/otherProfileScreens/get_verified_screen.dart';
-import 'package:mediassist/profile/otherProfileScreens/view_profile_screen.dart';
-import 'package:mediassist/profile/otherProfileScreens/wallet_screen.dart';
 
 class ActionButtons extends StatelessWidget {
   const ActionButtons({super.key});
@@ -12,24 +9,11 @@ class ActionButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        buildRectangle(Icons.person, "View Profile", () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const ViewProfileScreen()));
-        }),
+        buildRectangle(Icons.person, "Edit Profile", () {}),
         const SizedBox(width: 10),
-        buildRectangle(Icons.verified_user, "Get Verified", () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const GetVerifiedScreen()));
-        }),
+        buildRectangle(Icons.verified_user, "Get Verified", () {}),
         const SizedBox(width: 10),
-        buildRectangle(Icons.account_balance_wallet, "Wallet", () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const WalletScreen()));
-        }),
+        buildRectangle(Icons.account_balance_wallet, "Terms", () {}),
       ],
     );
   }

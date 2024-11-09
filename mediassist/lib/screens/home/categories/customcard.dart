@@ -122,7 +122,7 @@ class CardListView extends StatelessWidget {
         'onPressed': () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddAppointments()),
+            MaterialPageRoute(builder: (context) => AddAppointments()),
           );
         },
       },

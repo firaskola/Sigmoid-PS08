@@ -99,6 +99,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,19 +136,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 210,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 6, // Number of appointments you want to display
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 8),
-                    child: UpcomingAppointments(),
-                  );
-                },
+              child: UpcomingAppointments(
+                date: "12 Nov",
+                time: "10:30 AM",
+                doctorName: "Dr. John Doe",
+                details: "Regular Checkup",
               ),
             ),
+
             const Padding(
               padding: EdgeInsets.only(left: 16, top: 16),
               child: Text(
